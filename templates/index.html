@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIO Africa - Article & Events Dashboard</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header with Logo -->
+        <header class="main-header">
+            <div class="header-inner">
+                <div class="logo-section">
+                    <div class="logo-wrapper">
+                        <img src="/static/images/cio.png" alt="CIO Africa Logo" class="header-logo" onerror="this.style.display='none'">
+                        <div class="logo-text">
+                            <h1>CIO Africa Dashboard</h1>
+                            <p class="subtitle">Content Management System</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" onclick="openModal('article')">
+                        <span class="btn-icon">+</span> New Article
+                    </button>
+                    <button class="btn btn-primary btn-outline" onclick="openModal('event')">
+                        <span class="btn-icon">+</span> New Event
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="articleCount">0</div>
+                    <div class="stat-label">Total Articles</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="eventCount">0</div>
+                    <div class="stat-label">Upcoming Events</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="categoryCount">0</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="authorCount">0</div>
+                    <div class="stat-label">Contributors</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-container">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search articles by title, author, or summary..." oninput="applyFilters()">
+                    <span class="search-icon">⌕</span>
+                </div>
+                <div class="filter-controls">
+                    <select id="categoryFilter" onchange="applyFilters()" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Security">Security</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Fintech">Fintech</option>
+                        <option value="Energy">Energy</option>
+                        <option value="Education">Education</option>
+                    </select>
+                    <select id="authorFilter" onchange="applyFilters()" class="filter-select">
+                        <option value="">All Authors</option>
+                    </select>
+                    <button class="btn btn-secondary" onclick="clearFilters()">Clear Filters</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <main class="main-content">
+            <!-- Articles Section -->
+            <section class="content-section articles-section">
+                <div class="section-header">
+                    <h2>Articles</h2>
+                    <span class="section-count" id="articleCountLabel">0 articles</span>
+                </div>
+                <div id="articlesList" class="articles-grid">
+                    <!-- Articles will be rendered here -->
+                </div>
+            </section>
+
+            <!-- Events Section -->
+            <section class="content-section events-section">
+                <div class="section-header">
+                    <h2>Upcoming Events</h2>
+                    <span class="section-count" id="eventCountLabel">0 events</span>
+                </div>
+                <div id="eventsList" class="events-grid">
+                    <!-- Events will be rendered here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <p>&copy; 2026 CIO Africa. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Modal for Add/Edit -->
+    <div id="modal" class="modal">
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Article</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <form id="modalForm" class="modal-form">
+                <input type="hidden" id="formType" value="article">
+                <input type="hidden" id="editId" value="">
+                
+                <!-- Article Fields -->
+                <div id="articleFields">
+                    <div class="form-group">
+                        <label for="formTitle">Title <span class="required">*</span></label>
+                        <input type="text" id="formTitle" placeholder="Enter article title" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="formAuthor">Author <span class="required">*</span></label>
+                            <input type="text" id="formAuthor" placeholder="Author name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="formCategory">Category <span class="required">*</span></label>
+                            <input type="text" id="formCategory" placeholder="e.g., Technology" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="formDate">Published Date <span class="required">*</span></label>
+                        <input type="date" id="formDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="formDescription">Summary <span class="required">*</span></label>
+                        <textarea id="formDescription" rows="4" placeholder="Enter article summary..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Event Fields -->
+                <div id="eventFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="eventName">Event Name <span class="required">*</span></label>
+                        <input type="text" id="eventName" placeholder="Enter event name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventLocation">Location <span class="required">*</span></label>
+                        <input type="text" id="eventLocation" placeholder="Event location">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDate">Event Date <span class="required">*</span></label>
+                        <input type="date" id="eventDate">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDescription">Description <span class="required">*</span></label>
+                        <textarea id="eventDescription" rows="4" placeholder="Enter event description..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
