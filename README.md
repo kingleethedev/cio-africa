@@ -41,7 +41,7 @@ Live Demo: https://cio.pythonanywhere.com/
 
 ```bash
 git clone https://github.com/kingleethedev/cio-africa.git
-cd cio
+
 ```
 
 2. Create a virtual environment
