@@ -18,7 +18,6 @@ I chose Flask because I am more comfortable building REST APIs with Python. Flas
 ## Features
 
 * View all articles
-* View a single article
 * Add new articles
 * View upcoming events
 * Add new events
@@ -28,6 +27,8 @@ I chose Flask because I am more comfortable building REST APIs with Python. Flas
 * Clear error messages and appropriate HTTP status codes
 
 ## Installation
+
+Live Demo: https://cio.pythonanywhere.com/
 
 ### Requirements
 
@@ -98,8 +99,7 @@ http://127.0.0.1:3000
 If I had more time, I would add:
 
 * User authentication and authorization
-* Edit and delete functionality from the frontend
 * Pagination for long lists of articles
 * Unit tests for the API
-* Docker support for easier deployment
-* Deployment to Render with a live demo link
+* Docker support for easier deployment 
+  
